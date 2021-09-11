@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 
@@ -65,7 +66,7 @@ public class TestClass {
 
         }
         catch (Exception exc){
-            System.out.println(exc);
+            System.out.println(exc.getMessage());
 
 
         }
@@ -90,7 +91,7 @@ public class TestClass {
 
         }catch (Exception exc){
 
-            System.out.println(exc);
+            System.out.println(exc.getMessage());
         }
 
 
@@ -152,6 +153,47 @@ public class TestClass {
 
             System.out.println(exc.getMessage());
         }
+    }
+
+    @Test(priority = 4, description = "DataProvider", enabled = true, dataProvider = "credentials")
+    public void dataTest(String username, String password){
+
+        try{
+
+            browsers.driver.navigate().to("https://facebook.com");
+
+            WebElement emailText = browsers.driver.findElement(By.xpath("//input[@id=\"email\"]"));
+            emailText.clear();
+            emailText.sendKeys(username);
+
+            WebElement passwordText = browsers.driver.findElement(By.xpath("//input[@id=\"pass\"]"));
+            passwordText.clear();
+            passwordText.sendKeys(password);
+
+            WebElement loginBtn = browsers.driver.findElement(By.xpath("//button[@type=\"submit\"]"));
+            loginBtn.click();
+            Thread.sleep(1000);
+        }catch (Exception exc){
+
+            System.out.println(exc.getMessage());
+        }
+    }
+
+    @DataProvider
+    public Object[][] credentials(){
+
+        Object[][] loginCredentials = new Object[2][2];
+        //R1C1
+        loginCredentials[0][0] = "abc@xyz.com";
+        //R1C2
+        loginCredentials[0][1] = "qwerty";
+        //R2C1
+        loginCredentials[1][0] = "xyz@abc.com";
+        //R2C2
+        loginCredentials[1][1] = "mnbvcxz";
+
+        return loginCredentials;
+
     }
 
     @AfterClass
