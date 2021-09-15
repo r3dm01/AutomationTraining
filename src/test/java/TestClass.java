@@ -1,6 +1,7 @@
 import CommonLib.Browsers;
 import Elements.DPSelectors;
 import Inputs.Inputs;
+import Utilities.ExcelUtils;
 import Utilities.Utility;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -155,7 +156,7 @@ public class TestClass {
         }
     }
 
-    @Test(priority = 4, description = "DataProvider", enabled = true, dataProvider = "credentials")
+    @Test(priority = 4, description = "DataProvider", enabled = true, dataProvider = "credentials for facebook")
     public void dataTest(String username, String password){
 
         try{
@@ -179,7 +180,7 @@ public class TestClass {
         }
     }
 
-    @DataProvider
+    @DataProvider(name = "credentials for facebook")
     public Object[][] credentials(){
 
         Object[][] loginCredentials = new Object[2][2];
@@ -194,6 +195,19 @@ public class TestClass {
 
         return loginCredentials;
 
+    }
+
+    @DataProvider(name = "Login_credentials")
+    public Object[][] methodName() {
+        ExcelUtils excelUtils= new ExcelUtils("/home/r3dm0nk/IdeaProjects/DemoProject1/LoginFacebook.xlsx"); // create an object of ExcelUtils class. ie, we created.
+        int rows= excelUtils.getRowCount("");  // pass sheet index to get num of rows
+        Object[][] data=new Object[rows-1][2]; // create an object array to values we read from excel sheet.
+        for (int i=0;i<rows-1;i++)
+        {
+            data[i][0]=excelUtils.getData(); //dataconfig.getData(0,i,1); // getData
+            data[i][1]=excelUtils.getData() ; //dataconfig.getData(0,i, 2);
+        }
+        return data;
     }
 
     @AfterClass
