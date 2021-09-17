@@ -98,7 +98,7 @@ public class TestClass {
 
     }
 
-    @Test(priority = 3, description = "Test alerts and frames", enabled = true, invocationCount = 1)
+    @Test(priority = 3, description = "Test alerts and frames", enabled = false, invocationCount = 1)
     public void alertsFrames(){
 
         try{
@@ -156,7 +156,7 @@ public class TestClass {
         }
     }
 
-    @Test(priority = 4, description = "DataProvider", enabled = true, dataProvider = "credentials for facebook")
+    @Test(priority = 4, description = "DataProvider", enabled = true, dataProvider = "Login_credentials")
     public void dataTest(String username, String password){
 
         try{
@@ -199,13 +199,13 @@ public class TestClass {
 
     @DataProvider(name = "Login_credentials")
     public Object[][] methodName() {
-        ExcelUtils excelUtils= new ExcelUtils("/home/r3dm0nk/IdeaProjects/DemoProject1/LoginFacebook.xlsx"); // create an object of ExcelUtils class. ie, we created.
-        int rows= excelUtils.getRowCount("");  // pass sheet index to get num of rows
+        ExcelUtils excelUtils= new ExcelUtils("/home/r3dm0nk/IdeaProjects/DemoProject1/DemoProject/LoginFacebook.xlsx"); // create an object of ExcelUtils class. ie, we created.
+        int rows= excelUtils.getRowCount("0");  // pass sheet index to get num of rows
         Object[][] data=new Object[rows-1][2]; // create an object array to values we read from excel sheet.
         for (int i=0;i<rows-1;i++)
         {
-            data[i][0]=excelUtils.getData(); //dataconfig.getData(0,i,1); // getData
-            data[i][1]=excelUtils.getData() ; //dataconfig.getData(0,i, 2);
+            data[i][0]=excelUtils.getData(0,i,1); //dataconfig.getData(0,i,1); // getData
+            data[i][1]=excelUtils.getData(0,i,2) ; //dataconfig.getData(0,i, 2);
         }
         return data;
     }
